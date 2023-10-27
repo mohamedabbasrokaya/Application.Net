@@ -1,0 +1,48 @@
+﻿@using Application.Models.ViewModel;
+
+@model StudentViewModel
+@{
+    ViewData["Title"] = "Edit";
+  
+
+}
+
+<h1>Update Student</h1>
+<br />
+<br />
+
+<div class="row">
+    <div class="col-6">
+        <form asp-action="Edit" asp-controller="Student"> 
+            <input hidden asp-for="StudentId"/>
+            <div class="form-group">
+                <label asp-for="@Model.StudentName" class="col-form-label"></label>
+                <input asp-for="@Model.StudentName" class="form-control" />
+                <span asp-validation-for="@Model.StudentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.StudentAdress" class="col-form-label"></label>
+                <input asp-for="@Model.StudentAdress" class="form-control" />
+                <span asp-validation-for="@Model.StudentAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Phone" class="col-form-label"></label>
+                <input asp-for="@Model.Phone" class="form-control" name="Phone" />
+                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+            </div>
+           
+            <input type="submit" value="Add" class="btn btn-primary"/>
+            <a asp-action="Index" class="btn btn-light">Back To List</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <partial  name="_ValidationScriptsPartial"/>
+   
+}
+
+
+
