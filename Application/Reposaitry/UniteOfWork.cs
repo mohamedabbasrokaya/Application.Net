@@ -2,7 +2,8 @@
 
 namespace Application.Reposaitry
 {
-    public class UniteOfWork : IUniteOfWork
+
+        public class UniteOfWork : IUniteOfWork
     {
         public ICourcesRepo CourcesRepo { get ; set ; }
         public IStudentRepo StudentRepo { get ; set ; }

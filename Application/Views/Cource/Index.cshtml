@@ -1,0 +1,68 @@
+﻿@using Application.Models.ViewModel;
+@model IEnumerable<CourcesViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<h1>Index</h1>
+<br />
+<a asp-action="Create" class="btn btn-primary">Create New Cource</a>
+<br />
+<form asp-action="Index">
+    <div class="row">
+        <div class="col-sm-4">
+            <input name="SearchValue" placeholder="Search By Name" class="form-control" />
+        </div>
+        <div class="col-sm">
+            <input type="submit" value="Search" class="btn btn-success"/>
+           
+        </div>
+    </div>
+</form>
+<br />
+@if (Model?.Count() > 0)
+{
+    <table class="table table-stripped table-hover">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(M => M.CourcesId)</th>
+
+                <th>@Html.DisplayNameFor(M => M.CourcesName)</th>
+                <th>@Html.DisplayNameFor(M => M.Code)</th>
+           
+                
+                
+               
+                <th>Update</th>
+                <th>Delete</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CourcesId</td>
+
+                    <td>@item.CourcesName</td>
+                    <td>@item.Code</td>
+                 
+                    <partial name="_ButtonsPartialView" model="@item.CourcesId" />
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning">
+        <h3>No Cource Found!!</h3>
+    </div>
+}
+
+

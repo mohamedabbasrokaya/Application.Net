@@ -20,13 +20,14 @@ namespace Application.Models
         public virtual DbSet<Result> Results { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
 
-     
+       
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Cource>(entity =>
             {
                 entity.HasKey(e => e.CourcesId)
-                    .HasName("PK__Cources__4734F18E8BC3E48C");
+                    .HasName("PK__Cources__4734F18ED40E813D");
 
                 entity.ToTable("Cources", "about_Student");
 
@@ -73,7 +74,7 @@ namespace Application.Models
             {
                 entity.ToTable("Students", "about_Student");
 
-                entity.HasIndex(e => e.Phone, "UQ__Students__5C7E359E1F6464D3")
+                entity.HasIndex(e => e.Phone, "UQ__Students__5C7E359E6B0FFB68")
                     .IsUnique();
 
                 entity.Property(e => e.StudentId).HasColumnName("student_id");

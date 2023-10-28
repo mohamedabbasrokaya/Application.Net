@@ -1,4 +1,5 @@
-﻿using Application.interfaces;
+﻿
+using Application.interfaces;
 using Application.Models;
 using Application.Models.ViewModel;
 using AutoMapper;
@@ -17,43 +18,43 @@ namespace Application.Controllers
         public IUniteOfWork UniteOfWork { get; }
         public IMapper Mapper { get; }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var MappedStd = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(UniteOfWork.StudentRepo.GetAll());
+            var MappedStd = Mapper.Map<IEnumerable<Student>, IEnumerable<StudentViewModel>>(await UniteOfWork.StudentRepo.GetAllAsync());
             return View(MappedStd);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(StudentViewModel student)
+        public async Task<IActionResult> Create(StudentViewModel student)
         {
             if (ModelState.IsValid)
             {
 
-                var mapperstudent = Mapper.Map<StudentViewModel, Student>(student);
-                UniteOfWork.StudentRepo.Add(mapperstudent);
+               Student mapperstudent = Mapper.Map<StudentViewModel, Student>(student);
+               await UniteOfWork.StudentRepo.AddAsync(mapperstudent);
 
                 return RedirectToAction("Index");
             }
             return View(student);
 
         }
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
                 return NotFound();
-            var Student = UniteOfWork.StudentRepo.Get(id);
+            var Student =await UniteOfWork.StudentRepo.GetAsync(id);
             if (Student == null)
                 return NotFound();
             var Mappedstd = Mapper.Map<Student, StudentViewModel>(Student);
             return View(Mappedstd);
         }
         [HttpPost]
-        public IActionResult Edit(int id, StudentViewModel student)
+        public async Task<IActionResult> Edit(int id, StudentViewModel student)
         {
             if (id != student.StudentId)
                 return NotFound();
@@ -62,7 +63,7 @@ namespace Application.Controllers
                 try
                 {
                     var MappedStd = Mapper.Map<StudentViewModel, Student>(student);
-                    UniteOfWork.StudentRepo.Update(MappedStd);
+                    await UniteOfWork.StudentRepo.UpdateAsync(MappedStd);
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -72,18 +73,18 @@ namespace Application.Controllers
             }
             return View(student);
         }
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, Student student)
         {
             if (id == null)
                 return NotFound();
-            var Student = UniteOfWork.StudentRepo.Get(id);
+            var Student = await UniteOfWork.StudentRepo.GetAsync(id);
             if (Student == null)
                 return NotFound();
             var Mappedstd = Mapper.Map<Student, StudentViewModel>(Student);
             return View(Mappedstd);
         }
         [HttpPost]
-        public IActionResult Delete(int id, StudentViewModel student)
+        public async Task<IActionResult> Delete(int id, StudentViewModel student)
         {
             if (id != student.StudentId)
                 return NotFound();
@@ -91,7 +92,7 @@ namespace Application.Controllers
                 try
                 {
                     var MappedStd = Mapper.Map<StudentViewModel, Student>(student);
-                    UniteOfWork.StudentRepo.Delete(MappedStd);
+                    await UniteOfWork.StudentRepo.DeleteAsync(MappedStd);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)

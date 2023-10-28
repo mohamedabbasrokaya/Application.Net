@@ -2,7 +2,7 @@
 
 namespace Application.interfaces
 {
-   public interface IResultRepo:IGenericRepo<Result>
+  public interface IResultRepo:IGenericRepo<Result>
     {
 
     }

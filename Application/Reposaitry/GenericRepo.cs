@@ -1,41 +1,47 @@
 ﻿
 using Application.interfaces;
 using Application.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Reposaitry
 {
     public class GenericRepo<T> : IGenericRepo<T> where T : class
    {
        
-       public GenericRepo(Result_student_courcesContext context)
+       public GenericRepo(Result_student_courcesContext  context)
         {
             Context = context;
         }
 
        public Result_student_courcesContext Context { get; }
         
-        public int Add(T item)
+        public async Task<int> AddAsync(T item)
         {
-            Context.Set<T>().Add( item);
-            return Context.SaveChanges();
+           await Context.Set<T>().AddAsync( item);
+            return await Context.SaveChangesAsync();
+        }
+        public async Task<int> Add(T item)
+        {
+            await Context.Set<T>().AddAsync(item);
+            return await Context.SaveChangesAsync();
+        }     
+
+        public async Task<int> DeleteAsync(T item)
+        {
+            Context.Set<T>().Remove( item);
+            return await Context.SaveChangesAsync();
         }
 
-        public int Delete(T item)
+        public async Task<T> GetAsync(int? id)
+        =>await Context.Set<T>().FindAsync(id);
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        =>await Context.Set<T>().ToListAsync();
+
+        public async Task<int> UpdateAsync(T item)
         {
-           Context.Set<T>().Remove( item);
-            return Context.SaveChanges();
-        }
-
-        public T Get(int? id)
-        => Context.Set<T>().Find(id);
-
-        public IEnumerable<T> GetAll()
-        =>Context.Set<T>().ToList();
-
-        public int Update(T item)
-        {
-            Context.Set<T>().Update(item);
-            return Context.SaveChanges();
+           Context.Set<T>().Update(item);
+            return await Context.SaveChangesAsync();
         }
     
     }
