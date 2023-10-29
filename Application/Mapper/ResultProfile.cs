@@ -9,7 +9,11 @@ namespace Application.Mapper
     {
         public ResultProfile()
         {
-            CreateMap<Result, ResultViewModel>().ReverseMap();
+            CreateMap<Result, ResultViewModel>()
+                .ForMember(dest => dest.student, opt => opt.MapFrom(src => src.StudentNoNavigation))
+                .ForMember(dest => dest.Cources, opt => opt.MapFrom(src => src.CourceNoNavigation))
+
+                .ReverseMap();
         }
     }
 }

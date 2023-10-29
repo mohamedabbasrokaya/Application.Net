@@ -20,7 +20,7 @@ namespace Application.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var MappedResult = Mapper.Map<IEnumerable<Result>, IEnumerable<ResultViewModel>>(await UniteOfWork.ResultRepo.GetAllAsync());
+            var MappedResult = Mapper.Map<IEnumerable<Result>, IEnumerable<ResultViewModel>>(UniteOfWork.ResultRepo.GetResultWithStudentsAndCourses());
 
             return View(MappedResult);
         }
@@ -43,13 +43,15 @@ namespace Application.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Students = UniteOfWork.StudentRepo.GetAllAsync().Result;
-            ViewBag.Cources = UniteOfWork.CourcesRepo.GetAllAsync().Result;
+
             return View(result);
 
         }
+        
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Students = UniteOfWork.StudentRepo.GetAllAsync().Result;
+            ViewBag.Cources = UniteOfWork.CourcesRepo.GetAllAsync().Result;
             if (id == null)
                 return NotFound();
             var Result = await UniteOfWork.ResultRepo.GetAsync(id);
@@ -75,23 +77,30 @@ namespace Application.Controllers
                 }
                 catch (Exception ex)
                 {
-
+                    ViewBag.Students = UniteOfWork.StudentRepo.GetAllAsync().Result;
+                    ViewBag.Cources = UniteOfWork.CourcesRepo.GetAllAsync().Result;
 
                     return View(result);
                 }
             }
+            ViewBag.Students = UniteOfWork.StudentRepo.GetAllAsync().Result;
+            ViewBag.Cources = UniteOfWork.CourcesRepo.GetAllAsync().Result;
 
 
             return View(result);
         }
-        public async Task<IActionResult> Delete(int? id, Result result)
+        public async Task<IActionResult> Delete(int? id , Result result)
         {
+            ViewBag.Students = UniteOfWork.StudentRepo.GetAllAsync().Result;
+            ViewBag.Cources = UniteOfWork.CourcesRepo.GetAllAsync().Result;
             if (id == null)
                 return NotFound();
             var Result = await UniteOfWork.ResultRepo.GetAsync(id);
             if (Result == null)
                 return NotFound();
-            var MappedResult = Mapper.Map<Result, ResultViewModel>(result);
+            var MappedResult = Mapper.Map<Result, ResultViewModel>(Result);
+
+
             return View(MappedResult);
         }
         [HttpPost]
@@ -108,10 +117,22 @@ namespace Application.Controllers
             }
             catch (Exception ex)
             {
-                return View(result);
-            }
-            return View(result);
-        }
 
+                ViewBag.Students = UniteOfWork.StudentRepo.GetAllAsync().Result;
+                ViewBag.Cources = UniteOfWork.CourcesRepo.GetAllAsync().Result;
+                return View(result);
+
+            }
+
+
+            ViewBag.Students = UniteOfWork.StudentRepo.GetAllAsync().Result;
+            ViewBag.Cources = UniteOfWork.CourcesRepo.GetAllAsync().Result;
+            return View(result);
+
+
+        }
+        
+        }
     }
-}
+    
+    

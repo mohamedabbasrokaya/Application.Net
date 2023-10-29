@@ -1,5 +1,7 @@
 ﻿@using Application.Models.ViewModel;
 @model IEnumerable<ResultViewModel>
+
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,11 +11,9 @@
         justify-content: center;
     }
 </style>
-<br />
-<a asp-action="Create" class="btn btn-primary">Create New Result</a>
-<br />
 
-<br />
+
+
 @if (Model?.Count() > 0)
 {
     <table class="table table-stripped table-hover">
@@ -21,14 +21,13 @@
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(M => M.ResultId)</th>
-                <th>@Html.DisplayNameFor(M => M.ResultDegree)</th>
                 <th>@Html.DisplayNameFor(M => M.student.StudentName)</th>
                 <th>@Html.DisplayNameFor(M => M.Cources.CourcesName)</th>
-                
-                
-               
-                <th>Update</th>
-                <th>Delete</th>
+                <th>@Html.DisplayNameFor(M => M.Cources.Code)</th>
+                <th>@Html.DisplayNameFor(M => M.ResultDegree)</th>
+
+
+
 
             </tr>
         </thead>
@@ -37,11 +36,13 @@
             {
                 <tr>
                     <td>@item.ResultId</td>
-                    <td>@item.ResultDegree</td>
                     <td>@item.student?.StudentName</td>
                     <td>@item.Cources?.CourcesName</td>
-                    
-                    <partial name="_ButtonsPartialView" model="@item.ResultId" />
+                    <td>@item.Cources?.Code</td>
+                    <td>@item.ResultDegree</td>
+
+                    <partial model="@item.ResultId" />
+
                 </tr>
             }
         </tbody>
@@ -54,4 +55,5 @@ else
     </div>
 }
 
+<script src="site.js"></script>
 

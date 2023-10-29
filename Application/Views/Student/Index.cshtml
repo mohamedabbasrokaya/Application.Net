@@ -9,21 +9,11 @@
         justify-content: center;
     }
 </style>
-<h1>Index</h1>
+
 <br />
 <a asp-action="Create" class="btn btn-primary">Create New Student</a>
 <br />
-<form asp-action="Index">
-    <div class="row">
-        <div class="col-sm-4">
-            <input name="SearchValue" placeholder="Search By Name" class="form-control" />
-        </div>
-        <div class="col-sm">
-            <input type="submit" value="Search" class="btn btn-success"/>
-           
-        </div>
-    </div>
-</form>
+
 <br />
 @if (Model?.Count() > 0)
 {

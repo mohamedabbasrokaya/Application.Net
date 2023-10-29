@@ -1,10 +1,10 @@
 ﻿@using Application.Models.ViewModel;
 @model ResultViewModel
 @{
-    ViewData["Title"] = "Delete";
     var Students = new SelectList(ViewBag.Students, "StudentId", "StudentName");
     var Cources = new SelectList(ViewBag.Cources, "CourcesId", "CourcesName");
-
+    ViewData["Title"] = "Delete";
+  
 }
 
 <h1>Delete Result</h1>
@@ -19,21 +19,15 @@
                 <label asp-for="@Model.ResultDegree" class="col-form-label"></label>
                 <input asp-for="@Model.ResultDegree" class="form-control" readonly />
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.StudentNo" class="col-form-label"></label>
-                <select asp-for="@Model.StudentNo" asp-items="Students" class="form-control">
-                    <option>--- Select student ---</option>
-                </select>
-                <span asp-validation-for="@Model.StudentNo" class="text-danger"></span>
+            
+           <div class="form-group">
+                <label asp-for="@Model.student.StudentName" class="col-form-label"></label>
+                <input asp-for="@Model.student.StudentName" class="form-control" readonly />
             </div>
             <div class="form-group">
-                <label asp-for="@Model.CourceNo" class="col-form-label"></label>
-                <select asp-for="@Model.CourceNo" asp-items="Cources" class="form-control">
-                    <option>--- Select cource ---</option>
-                </select>
-                <span asp-validation-for="@Model.CourceNo" class="text-danger"></span>
+                <label asp-for="@Model.Cources.CourcesName" class="col-form-label"></label>
+                <input asp-for="@Model.Cources.CourcesName" class="form-control" readonly />
             </div>
-
           
 
             <input type="submit" class="btn btn-danger" value="Delete" /> |

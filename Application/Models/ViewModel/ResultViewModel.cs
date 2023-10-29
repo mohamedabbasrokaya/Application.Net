@@ -7,8 +7,8 @@
         public int? StudentNo { get; set; }
         public int? CourceNo { get; set; } 
 
-        public StudentViewModel student { get; set;}
-       public CourcesViewModel Cources { get; set; }
+        public StudentViewModel? student { get; set;}
+       public CourcesViewModel? Cources { get; set; }
 
    
     }
